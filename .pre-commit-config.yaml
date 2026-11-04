@@ -1,0 +1,42 @@
+# Chequeos que corren solos en cada `git commit`, sobre los archivos que cambiaste.
+# Si alguno arregla algo (por ejemplo, formato), el commit se frena: revisá el cambio,
+# hacé `git add` de nuevo y volvé a commitear.
+#
+# Instalar una sola vez (desde la raíz del repo):   uvx pre-commit install
+# Correrlos a mano sobre todo el repo:              uvx pre-commit run --all-files
+
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      - id: trailing-whitespace
+        args: [--markdown-linebreak-ext=md]
+      - id: end-of-file-fixer
+      - id: check-yaml
+        exclude: ^frontend/pnpm-lock\.yaml$ # lo genera pnpm (varios documentos YAML)
+      - id: check-json
+        exclude: ^frontend/tsconfig\.json$ # admite comentarios
+      - id: check-merge-conflict
+      - id: check-added-large-files
+        args: [--maxkb=1024]
+      - id: detect-private-key
+
+  # Backend: mismo ruff y misma configuración que el CI (backend/pyproject.toml).
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.17.3
+    hooks:
+      - id: ruff-check
+        args: [--fix]
+        files: ^backend/
+      - id: ruff-format
+        files: ^backend/
+
+  # Frontend: el prettier del proyecto (frontend/node_modules), con su configuración.
+  - repo: local
+    hooks:
+      - id: prettier
+        name: prettier (frontend)
+        language: system
+        files: ^frontend/
+        exclude: ^frontend/pnpm-lock\.yaml$
+        entry: bash -c 'cd frontend && pnpm exec prettier --write --ignore-unknown "${@#frontend/}"' --
