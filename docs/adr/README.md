@@ -10,5 +10,6 @@ Formato: Contexto → Decisión → Alternativas consideradas → Consecuencias.
 | [0002](0002-fastapi-nextjs.md) | FastAPI + Next.js con contrato OpenAPI | Aceptada |
 | [0003](0003-jwt-cookies.md) | Autenticación propia con JWT en cookies httpOnly | Aceptada |
 | [0004](0004-github-flow.md) | GitHub Flow con ramas por feature y squash merge | Aceptada |
+| [0005](0005-sqlalchemy-async-uuid.md) | SQLAlchemy async, IDs UUID y Python 3.13 | Aceptada |
 
 Para crear uno nuevo: copiar el formato de cualquiera, siguiente número, y sumarlo a esta tabla en el mismo PR.

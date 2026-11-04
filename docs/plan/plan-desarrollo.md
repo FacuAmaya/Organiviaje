@@ -19,7 +19,7 @@ Entregable inmediato al aprobar: **PDF del plan** (`docs/plan/plan-desarrollo.pd
 | Capa | Elección | Por qué |
 |---|---|---|
 | Monorepo | `backend/` + `frontend/` + `docs/` en un repo | Un PR puede tocar API y UI de la misma historia |
-| Backend | Python 3.12, FastAPI, Pydantic v2, SQLAlchemy 2 (async) + Alembic, `uv` | Tipado, OpenAPI automático, migraciones versionadas |
+| Backend | Python 3.13, FastAPI, Pydantic v2, SQLAlchemy 2 (async) + Alembic, `uv` | Tipado, OpenAPI automático, migraciones versionadas |
 | DB | PostgreSQL 16 (+ Redis para pub/sub de tiempo real) | Relacional encaja con el modelo UML; Redis para WebSocket multi-instancia |
 | Auth | Email+password, hash argon2, JWT access (corto) + refresh, cookies httpOnly | Se entiende el flujo completo |
 | Tiempo real | WebSockets de FastAPI, canal por viaje, Redis pub/sub | CU3 / US183–US184: "actualizar sin recargar" |
@@ -131,7 +131,7 @@ Al mergear queda en `main`, así la historia del proyecto es legible feature por
 | 00 | `base/00-preparar-repositorio` | Estructura monorepo, docs generales iniciales (README, CONTEXT, UX, AGENTS, ARCHITECTURE, ADRs 0001–0004), templates de PR/issue, CODEOWNERS, `.editorconfig`, `.gitignore`, PDFs de análisis, PDF del plan |
 | 01 | `base/01-backend-fastapi` | FastAPI + config (pydantic-settings), DB async, Alembic, `/health`, manejo de errores, pytest, Ruff, mypy |
 | 02 | `base/02-frontend-nextjs` | Next.js + TS + Tailwind + shadcn, layout base, ESLint/Prettier, Vitest, Playwright |
-| 03 | `base/03-docker-y-ci` | docker-compose (db, redis, api, web), GitHub Actions (lint+test back y front), pre-commit, branch protection |
+| 03 | `base/03-docker-y-ci` | docker-compose (redis, api, web; `db` ya se sumó en la 01), GitHub Actions (lint+test back y front), pre-commit, branch protection |
 | 04 | `funcionalidad/04-registro-e-inicio-de-sesion` | Usuario, registro/login/logout/refresh, JWT en cookies, `get_current_user`, páginas login/registro, middleware de rutas protegidas |
 | 05 | `experimento/05-tiempo-real` | Prueba de concepto WebSocket + Redis + mapa (mayor riesgo técnico, se valida temprano y se descarta/reutiliza) |
 

@@ -10,15 +10,21 @@ Instrucciones para **cualquiera que escriba código en este repo**: integrantes 
 
 ## 1. Comandos
 
-> Se completan a medida que se crean los esqueletos (ramas 01–03).
+> Se completan a medida que se crean los esqueletos (ramas 01–03). Los de backend se corren desde `backend/`.
 
 | Tarea | Comando |
 |---|---|
-| Levantar todo | `docker compose up` |
-| Backend: tests | `cd backend && uv run pytest` |
-| Backend: lint + formato | `cd backend && uv run ruff check . && uv run ruff format .` |
-| Backend: tipos | `cd backend && uv run mypy app` |
-| Nueva migración | `cd backend && uv run alembic revision --autogenerate -m "descripcion"` |
+| Primera vez | `cp .env.example .env` |
+| Base de datos (Postgres en el puerto 5433) | `docker compose up -d db` |
+| Backend: instalar dependencias | `uv sync` |
+| Backend: levantar API | `uv run uvicorn app.main:app --reload` → http://localhost:8000/docs |
+| Backend: tests + cobertura | `uv run pytest --cov=app` |
+| Backend: lint + formato | `uv run ruff check --fix . && uv run ruff format .` |
+| Backend: tipos | `uv run mypy app tests` |
+| Backend: agregar dependencia | `uv add paquete` (dev: `uv add --dev paquete`) |
+| Nueva migración | `uv run alembic revision --autogenerate -m "descripcion"` (revisarla siempre antes de commitear) |
+| Aplicar migraciones | `uv run alembic upgrade head` |
+| Verificar que modelos y migraciones coinciden | `uv run alembic check` |
 | Frontend: dev | `cd frontend && npm run dev` |
 | Frontend: tests | `cd frontend && npm test` |
 | Frontend: e2e | `cd frontend && npm run test:e2e` |
@@ -103,7 +109,9 @@ Instrucciones para **cualquiera que escriba código en este repo**: integrantes 
 - `snake_case` en funciones/variables, `PascalCase` en clases. Type hints en todo.
 - Lógica de negocio en `domain.py`, nunca en el router.
 - Dinero con `Decimal`; fechas timezone-aware en UTC.
-- Errores de dominio como excepciones propias; nada de `HTTPException` fuera del router/`errors.py`.
+- Errores de dominio como subclases de `AppError` (`app/core/errors.py`), con `code` en snake_case y en español; nada de `HTTPException` fuera del router.
+- Modelos nuevos heredan de `Base`, `UUIDPrimaryKey` y `Timestamps` (`app/core/db.py`) y se registran en `app/models.py`.
+- Tests que necesitan Postgres llevan `@pytest.mark.db`.
 - Toda ruta de viaje usa `require_member` o `require_organizer`.
 
 **Frontend (TypeScript)**

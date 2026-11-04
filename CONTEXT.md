@@ -84,13 +84,13 @@ Backlog de 185 historias en un User Story Mapping ([docs/analisis/2-user-story-m
 
 > Actualizar esta tabla al abrir y al mergear cada rama.
 
-Leyenda: ✅ hecha · 🚧 en curso · ⏳ pendiente
+Leyenda: ✅ hecha · 👀 en review (PR abierto) · 🚧 en curso · ⏳ pendiente
 
 ### Fase 0 — Fundaciones
 | # | Rama | Estado | Doc |
 |---|---|---|---|
-| 00 | `base/00-preparar-repositorio` | 🚧 | [00-preparar-repositorio](docs/features/00-preparar-repositorio.md) |
-| 01 | `base/01-backend-fastapi` | ⏳ | |
+| 00 | `base/00-preparar-repositorio` | 👀 en review | [00-preparar-repositorio](docs/features/00-preparar-repositorio.md) |
+| 01 | `base/01-backend-fastapi` | 🚧 | [01-backend-fastapi](docs/features/01-backend-fastapi.md) |
 | 02 | `base/02-frontend-nextjs` | ⏳ | |
 | 03 | `base/03-docker-y-ci` | ⏳ | |
 | 04 | `funcionalidad/04-registro-e-inicio-de-sesion` | ⏳ | |
