@@ -99,6 +99,20 @@ Decisiones de esta estructura: [ADR 0006](docs/adr/0006-frontend-base.md).
 4. **Mobile-first**: se diseña para 360px y se amplía.
 5. Cada pantalla tiene estados **vacío, carga y error**.
 
+## Infraestructura
+
+```
+docker compose up
+ ├─ db      postgres:16      puerto host POSTGRES_PORT (5433)
+ ├─ redis   redis:7          puerto host REDIS_PORT (6380)
+ ├─ api     backend/Dockerfile → etapa desarrollo   (espera a db y redis sanos)
+ └─ web     frontend/Dockerfile → etapa desarrollo  (espera a api sana)
+```
+
+- **Un Dockerfile por servicio, con etapas**: `base` (dependencias) → `desarrollo` (herramientas + recarga) → `test` (corre todos los chequeos) → `produccion` (mínima, usuario sin privilegios). Ver [03-docker-y-ci](docs/features/03-docker-y-ci.md#decisiones-del-debate).
+- **CI** (`.github/workflows/ci.yml`): en cada PR corre backend, frontend, contrato API ↔ frontend e imágenes de producción, solo si cambiaron sus archivos. El check **CI ok** es el que exige la protección de `main`.
+- **pre-commit** (`.pre-commit-config.yaml`): formatea y revisa antes de cada commit.
+
 ## Testing
 
 | Nivel | Herramienta | Qué cubre |
