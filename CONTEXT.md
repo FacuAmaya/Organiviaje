@@ -89,9 +89,9 @@ Leyenda: ✅ hecha · 👀 en review (PR abierto) · 🚧 en curso · ⏳ pendie
 ### Fase 0 — Fundaciones
 | # | Rama | Estado | Doc |
 |---|---|---|---|
-| 00 | `base/00-preparar-repositorio` | 👀 en review | [00-preparar-repositorio](docs/features/00-preparar-repositorio.md) |
-| 01 | `base/01-backend-fastapi` | 🚧 | [01-backend-fastapi](docs/features/01-backend-fastapi.md) |
-| 02 | `base/02-frontend-nextjs` | ⏳ | |
+| 00 | `base/00-preparar-repositorio` | ✅ | [00-preparar-repositorio](docs/features/00-preparar-repositorio.md) |
+| 01 | `base/01-backend-fastapi` | ✅ | [01-backend-fastapi](docs/features/01-backend-fastapi.md) |
+| 02 | `base/02-frontend-nextjs` | 🚧 | [02-frontend-nextjs](docs/features/02-frontend-nextjs.md) |
 | 03 | `base/03-docker-y-ci` | ⏳ | |
 | 04 | `funcionalidad/04-registro-e-inicio-de-sesion` | ⏳ | |
 | 05 | `experimento/05-tiempo-real` | ⏳ | |

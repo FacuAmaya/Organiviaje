@@ -2,7 +2,7 @@
 
 Fuente de verdad de los **tokens decididos**. Se implementan como CSS variables del tema (Tailwind + shadcn/ui). Nada de valores sueltos en componentes.
 
-> **Versión:** v0 · provisorio (tema neutro). Completar al consolidar la investigación de [docs/ux/](README.md).
+> **Versión:** v0 · provisorio (tema neutro de shadcn `base-nova`, color base `neutral`, tipografía Inter). Implementado en `frontend/src/app/globals.css`. Completar al consolidar la investigación de [docs/ux/](README.md).
 
 ## 1. Marca y tono
 
@@ -55,7 +55,7 @@ Regla: todo par texto/fondo cumple contraste **WCAG AA** (4.5:1 texto normal, 3:
 ## 4. Espaciado, radios, sombras
 
 - Escala de espaciado: la de Tailwind (múltiplos de 4px).
-- Radio base `--radius`: `0.5rem` (provisorio).
+- Radio base `--radius`: `0.625rem` (provisorio, default de shadcn).
 - Sombras: _por definir_ (preferir pocas y sutiles).
 
 ## 5. Iconografía e ilustración

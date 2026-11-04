@@ -25,10 +25,14 @@ Instrucciones para **cualquiera que escriba código en este repo**: integrantes 
 | Nueva migración | `uv run alembic revision --autogenerate -m "descripcion"` (revisarla siempre antes de commitear) |
 | Aplicar migraciones | `uv run alembic upgrade head` |
 | Verificar que modelos y migraciones coinciden | `uv run alembic check` |
-| Frontend: dev | `cd frontend && npm run dev` |
-| Frontend: tests | `cd frontend && npm test` |
-| Frontend: e2e | `cd frontend && npm run test:e2e` |
-| Regenerar cliente API | `cd frontend && npm run api:generate` |
+| Frontend: instalar dependencias | `pnpm install` (desde `frontend/`; pnpm se activa con `corepack enable pnpm`) |
+| Frontend: levantar | `pnpm dev` → http://localhost:3000 |
+| Frontend: tests de componentes | `pnpm test` (en modo watch: `pnpm test:watch`) |
+| Frontend: e2e (navegador real) | `pnpm test:e2e` (la primera vez: `pnpm exec playwright install chromium`) |
+| Frontend: lint + tipos + formato | `pnpm lint && pnpm typecheck && pnpm format:check` (arreglar formato: `pnpm format`) |
+| Frontend: agregar componente shadcn | `pnpm dlx shadcn@latest add <componente>` |
+| Regenerar cliente de la API | con el backend levantado: `pnpm api:generate` (commitear `src/lib/api/schema.d.ts`) |
+| Build de producción | `pnpm build` |
 
 ## 2. Flujo de Git
 
@@ -116,8 +120,11 @@ Instrucciones para **cualquiera que escriba código en este repo**: integrantes 
 
 **Frontend (TypeScript)**
 - `strict: true`; sin `any`.
-- Componentes en `PascalCase.tsx`, hooks `useAlgo`.
-- Datos del servidor solo con TanStack Query y el cliente generado.
+- Archivos en kebab-case (`boton-tema.tsx`); componentes en PascalCase (`BotonTema`); hooks `useAlgo`.
+- **Ningún texto visible escrito en el JSX**: todo sale de `src/textos/es.ts`.
+- Datos del servidor solo con TanStack Query y el cliente `api` de `src/lib/api/client.ts`. Si cambia la API: `pnpm api:generate`.
+- Código de una feature en `src/features/<feature>/`; lo compartido en `src/components/` y `src/lib/`.
+- Next.js 16 cambió APIs: antes de usar algo nuevo, leer `node_modules/next/dist/docs/` (lo pide `frontend/AGENTS.md`, que mantiene Next; no editarlo).
 - Estilos solo con clases de Tailwind que usan tokens del tema. Prohibido hardcodear colores o tamaños mágicos.
 - Formularios con react-hook-form + zod.
 

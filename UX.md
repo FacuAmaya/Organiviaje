@@ -53,9 +53,9 @@ Fuente de verdad: [docs/ux/04-design-system.md](docs/ux/04-design-system.md). Im
 | Colores | Neutros de shadcn (`--background`, `--foreground`, `--primary`, `--muted`, `--destructive`…) |
 | Estados de propuesta | `--estado-abierta`, `--estado-votacion`, `--estado-decidida` (por definir) |
 | Categorías de mapa | `--cat-alojamiento`, `--cat-actividad`, `--cat-transporte`, `--cat-restaurante` (por definir) |
-| Tipografía | Sistema / Inter (provisorio) |
-| Radio | `0.5rem` |
-| Modo oscuro | Soportado desde el inicio vía tokens |
+| Tipografía | Inter vía `next/font` (provisorio) |
+| Radio | `0.625rem` (default de shadcn) |
+| Modo oscuro | ✅ Claro / oscuro / sistema, sin parpadeo (botón en el encabezado) |
 
 ## 5. Responsive y PWA
 
@@ -70,3 +70,4 @@ Fuente de verdad: [docs/ux/04-design-system.md](docs/ux/04-design-system.md). Im
 | Fecha | Cambio | Origen |
 |---|---|---|
 | 2026-11-04 | Principios, navegación y flujos iniciales | Plan de desarrollo |
+| 2026-11-04 | Tema neutro v0 (shadcn `base-nova`, neutral), Inter, modo oscuro, safe areas de iOS, `prefers-reduced-motion` | `base/02-frontend-nextjs` |
