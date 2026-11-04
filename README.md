@@ -12,17 +12,17 @@ Resultado buscado: una web app deployada, instalable en el celular como PWA y us
 |---|---|
 | Backend | Python 3.13 · FastAPI · SQLAlchemy 2 (async) · Alembic · Pydantic v2 |
 | Base de datos | PostgreSQL 16 · Redis (pub/sub de tiempo real) |
-| Frontend | Next.js (App Router) · TypeScript · Tailwind CSS · shadcn/ui · TanStack Query |
+| Frontend | Next.js 16 (App Router) · TypeScript · Tailwind CSS · shadcn/ui · TanStack Query |
 | Mapas | MapLibre GL · OpenStreetMap |
 | Infra | Docker Compose · GitHub Actions · Vercel + Render/Railway |
 
 ## Estado
 
-🚧 **Fase 0 — Fundaciones.** Esqueleto del backend listo; frontend en camino. Ver el estado detallado en [CONTEXT.md](CONTEXT.md#estado-del-proyecto).
+🚧 **Fase 0 — Fundaciones.** Esqueletos de backend y frontend listos; próximo: Docker completo y CI. Ver el estado detallado en [CONTEXT.md](CONTEXT.md#estado-del-proyecto).
 
 ## Cómo levantarlo
 
-Requisitos: Docker y [uv](https://docs.astral.sh/uv/).
+Requisitos: Docker, [uv](https://docs.astral.sh/uv/) y Node 24 (con corepack para pnpm).
 
 ```bash
 cp .env.example .env
@@ -32,6 +32,13 @@ uv sync
 uv run alembic upgrade head
 uv run uvicorn app.main:app --reload
 # API → http://localhost:8000/docs
+
+# en otra terminal
+cd frontend
+cp .env.example .env.local
+pnpm install                     # pnpm se activa con: corepack enable pnpm
+pnpm dev
+# Web → http://localhost:3000
 ```
 
 > En la rama `base/03-docker-y-ci` todo pasa a levantarse con un solo `docker compose up` (API, web, base y Redis).

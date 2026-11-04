@@ -14,3 +14,5 @@ Todos los cambios relevantes del proyecto. Formato basado en [Keep a Changelog](
 - Esqueleto del backend: FastAPI, Python 3.13, SQLAlchemy async, Alembic, `/health`, formato de error unificado, pytest, ruff y mypy.
 - `docker-compose.yml` con PostgreSQL 16 para desarrollo y base de tests separada.
 - ADR 0005: SQLAlchemy async, IDs UUID y Python 3.13.
+- Esqueleto del frontend: Next.js 16, pnpm, Tailwind 4, shadcn/ui, modo oscuro sin parpadeo, Inter, textos en español centralizados, cliente tipado de la API, indicador de estado del servidor, Vitest y Playwright (celular y escritorio).
+- ADR 0006: base del frontend.

@@ -70,19 +70,26 @@ backend/
 ```
 frontend/src/
   app/
-    (auth)/login, registro/
-    (app)/viajes/
-      [viajeId]/  ideas · votaciones · itinerario · mapa · gastos · hoy
+    layout.tsx              layout raíz: idioma, tipografía, script de tema, encabezado
+    providers.tsx           TanStack Query (y futuros proveedores globales)
+    globals.css             tokens del tema claro/oscuro (CSS variables)
+    (auth)/login, registro/                                   ← rama 04
+    (app)/viajes/[viajeId]/ ideas · votaciones · itinerario · mapa · gastos · hoy
   features/<feature>/
     components/             componentes de la feature
-    hooks.ts                hooks de TanStack Query (useViajes, useCrearGasto…)
+    hooks.ts                hooks de TanStack Query (useEstadoApi, useCrearGasto…)
     schemas.ts              validación zod de formularios
-  components/ui/            shadcn/ui (base del design system)
+  components/
+    ui/                     shadcn/ui (base del design system)
+    layout/ · tema/         piezas compartidas (encabezado, botón de tema)
   lib/
-    api/                    cliente generado desde OpenAPI + fetcher
-    realtime/               cliente WebSocket con reconexión
-  styles/                   tokens del tema (CSS variables)
+    api/                    client.ts (openapi-fetch) + schema.d.ts (generado)
+    tema.ts                 lógica del tema claro/oscuro/sistema
+    realtime/               cliente WebSocket con reconexión              ← rama 05
+  textos/es.ts              todos los textos de la interfaz
 ```
+
+Decisiones de esta estructura: [ADR 0006](docs/adr/0006-frontend-base.md).
 
 ### Reglas
 
