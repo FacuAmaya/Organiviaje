@@ -2,7 +2,7 @@
 
 | Rama | Estado | Responsable(s) | Issue | PR |
 |---|---|---|---|---|
-| `experimento/05-tiempo-real` | ⏳ pendiente | — *(asignarse en el issue)* | #— | #— |
+| `experimento/05-tiempo-real` | ⏳ pendiente | — *(asignarse en el issue)* | [#7](https://github.com/FacuAmaya/Organiviaje/issues/7) | #— |
 
 > **Cómo usar este documento:** antes de empezar se lee y se debate (sección *Preguntas abiertas*); mientras se trabaja se completan *Decisiones*, *Hecho* y *Falta*; al cerrar se revisa *Cómo probarlo*. Lo que está en *Diseño propuesto* es un punto de partida, no una obligación: si en el debate se decide otra cosa, se actualiza acá.
 
