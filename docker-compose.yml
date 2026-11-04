@@ -1,6 +1,6 @@
 # Entorno de desarrollo local.
 # Postgres se expone en el puerto 5433 del host para no chocar con un Postgres instalado localmente.
-# Por ahora solo la base de datos; api, web y redis se suman en la rama chore/03-docker-ci.
+# Por ahora solo la base de datos; api, web y redis se suman en la rama base/03-docker-y-ci.
 #   docker compose up -d db
 
 services:

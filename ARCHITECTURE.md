@@ -27,11 +27,13 @@ Cómo está organizado el sistema y por qué. Las decisiones de fondo están jus
 backend/
   app/
     main.py                 crea la app, monta routers, middlewares, handlers de error
+    models.py               registro central de modelos (lo usa Alembic)
+    api/health.py           endpoints transversales (health)
     core/
       config.py             Settings (pydantic-settings, lee .env)
       db.py                 engine async, sesión, Base declarativa
       security.py           hash argon2, emisión/validación de JWT
-      deps.py               get_db, get_current_user, require_member, require_organizer
+      deps.py               SessionDep, SettingsDep · (rama 04+) get_current_user, require_member, require_organizer
       errors.py             excepciones de dominio → respuestas HTTP uniformes
     modules/
       nucleo/  decisiones/  planificacion/  finanzas/  realtime/
@@ -54,10 +56,12 @@ backend/
 3. **Autorización centralizada** en `MiembroViaje`: `require_member(viaje_id)` y `require_organizer(viaje_id)` como dependencias de FastAPI.
 4. **Dinero**: `Decimal` en Python, `NUMERIC(12, 2)` en la base. Nunca `float`.
 5. **Fechas**: siempre timezone-aware en UTC en la base; el frontend convierte a la zona del viaje.
+   - **IDs UUID** y timestamps en todas las tablas (`UUIDPrimaryKey`, `Timestamps` de `app/core/db.py`; [ADR 0005](docs/adr/0005-sqlalchemy-async-uuid.md)). En async, las relaciones se cargan de forma explícita (`selectinload`), sin lazy loading.
 6. **Errores**: el dominio lanza excepciones propias (`NoEsMiembro`, `DistribucionInvalida`…); `errors.py` las traduce a un formato único:
    ```json
    { "error": { "code": "distribucion_invalida", "message": "Las partes no suman el total", "details": {} } }
    ```
+   Códigos base: `no_encontrado` 404 · `conflicto` 409 · `no_autenticado` 401 · `sin_permiso` 403 · `validacion` 422 (con `details.campos[]`) · `error_interno` 500. Ver [docs/features/01-backend-fastapi.md](docs/features/01-backend-fastapi.md#errores).
 7. **Herencia de Propuesta**: single-table con discriminador `tipo`.
 8. **Patrones del modelo** que se respetan en código: `CriterioDivision` como Strategy (polimorfismo de `distribuir()`), conceptos asociativos como tablas propias con datos (`MiembroViaje`, `AporteGasto`, `ParteGasto`, `ParticipacionActividad`).
 

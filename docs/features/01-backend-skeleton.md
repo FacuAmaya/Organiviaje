@@ -2,7 +2,7 @@
 
 | Rama | Estado | Responsable(s) | Inicio | Cierre | PR |
 |---|---|---|---|---|---|
-| `chore/01-backend-skeleton` | 🚧 en curso | @FacuAmaya | 2026-11-04 | — | #— |
+| `base/01-backend-fastapi` | 🚧 en curso | @FacuAmaya | 2026-11-04 | — | #— |
 
 ## Objetivo
 

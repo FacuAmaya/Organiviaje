@@ -10,7 +10,7 @@ Resultado buscado: una web app deployada, instalable en el celular como PWA y us
 
 | Capa | Tecnología |
 |---|---|
-| Backend | Python 3.12 · FastAPI · SQLAlchemy 2 (async) · Alembic · Pydantic v2 |
+| Backend | Python 3.13 · FastAPI · SQLAlchemy 2 (async) · Alembic · Pydantic v2 |
 | Base de datos | PostgreSQL 16 · Redis (pub/sub de tiempo real) |
 | Frontend | Next.js (App Router) · TypeScript · Tailwind CSS · shadcn/ui · TanStack Query |
 | Mapas | MapLibre GL · OpenStreetMap |
@@ -18,18 +18,23 @@ Resultado buscado: una web app deployada, instalable en el celular como PWA y us
 
 ## Estado
 
-🚧 **Fase 0 — Fundaciones.** Todavía no hay código de aplicación. Ver el estado detallado en [CONTEXT.md](CONTEXT.md#estado-del-proyecto).
+🚧 **Fase 0 — Fundaciones.** Esqueleto del backend listo; frontend en camino. Ver el estado detallado en [CONTEXT.md](CONTEXT.md#estado-del-proyecto).
 
 ## Cómo levantarlo
 
-> Disponible a partir de la rama `base/03-docker-y-ci`.
+Requisitos: Docker y [uv](https://docs.astral.sh/uv/).
 
 ```bash
 cp .env.example .env
-docker compose up
-# API  → http://localhost:8000/docs
-# Web  → http://localhost:3000
+docker compose up -d db          # PostgreSQL en el puerto 5433
+cd backend
+uv sync
+uv run alembic upgrade head
+uv run uvicorn app.main:app --reload
+# API → http://localhost:8000/docs
 ```
+
+> En la rama `base/03-docker-y-ci` todo pasa a levantarse con un solo `docker compose up` (API, web, base y Redis).
 
 ## Documentación
 

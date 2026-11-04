@@ -11,3 +11,6 @@ Todos los cambios relevantes del proyecto. Formato basado en [Keep a Changelog](
 - Análisis original del TP en `docs/analisis/`.
 - Carpeta de investigación de look & feel `docs/ux/`.
 - Templates de PR e issues, CODEOWNERS, `.editorconfig`, `.gitignore`.
+- Esqueleto del backend: FastAPI, Python 3.13, SQLAlchemy async, Alembic, `/health`, formato de error unificado, pytest, ruff y mypy.
+- `docker-compose.yml` con PostgreSQL 16 para desarrollo y base de tests separada.
+- ADR 0005: SQLAlchemy async, IDs UUID y Python 3.13.
