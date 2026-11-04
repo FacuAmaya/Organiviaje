@@ -5,7 +5,7 @@ Cada feature tiene **una rama** y **un documento** con su especificación. El do
 ## Cómo tomar una feature
 
 1. Elegí una feature cuyas dependencias estén ✅ (ver el mapa de abajo y [CONTEXT.md](../../CONTEXT.md#estado-del-proyecto)).
-2. Asignate el issue en el [tablero del proyecto](https://github.com/FacuAmaya/Organiviaje/projects) y movelo a *En curso*.
+2. Asignate el issue en el [tablero del proyecto](https://github.com/users/FacuAmaya/projects/1) y movelo a *En curso*.
 3. Traé la rama y actualizala con lo último de `main` (las ramas se crearon por adelantado y pueden estar atrasadas):
    ```bash
    git fetch origin

@@ -54,6 +54,7 @@ pnpm dev
 | [CHANGELOG.md](CHANGELOG.md) | Cambios por versión |
 | [docs/plan/](docs/plan/) | Plan de desarrollo completo (md + pdf) |
 | [docs/features/](docs/features/) | Un documento por feature: qué se hizo, qué falta, cómo probarlo |
+| [Tablero del proyecto](https://github.com/users/FacuAmaya/projects/1) | Quién está trabajando en qué (un issue por feature) |
 | [docs/adr/](docs/adr/) | Decisiones de arquitectura (ADRs) |
 | [docs/ux/](docs/ux/) | Investigación de look & feel en curso |
 | [docs/analisis/](docs/analisis/) | Análisis original: modelo UML, USM, casos de uso, actividad |
@@ -62,7 +63,7 @@ pnpm dev
 
 Resumen (detalle en [AGENTS.md](AGENTS.md)):
 
-1. Tomá un issue del tablero (cada historia `US###` es un issue).
+1. Elegí una feature en el [tablero](https://github.com/users/FacuAmaya/projects/1) (cada feature es un issue) y asignátela.
 2. Creá la rama desde `main` actualizada: `funcionalidad/NN-descripcion`.
 3. Primer commit: `docs/features/NN-descripcion.md` a partir de [`_TEMPLATE.md`](docs/features/_TEMPLATE.md).
 4. Commits con [Conventional Commits](https://www.conventionalcommits.org/es/v1.0.0/) e ID de historia.
