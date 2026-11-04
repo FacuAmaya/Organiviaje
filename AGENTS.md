@@ -27,31 +27,53 @@ Instrucciones para **cualquiera que escriba código en este repo**: integrantes 
 ## 2. Flujo de Git
 
 - `main` está protegida: solo entra código por PR con 1 aprobación y CI verde.
-- Ramas desde `main` actualizada:
+- Ramas desde `main` actualizada. **Los nombres son en español y tienen que entenderse sin conocer el proyecto**: tipo de cambio + número del paso en el plan + qué hace.
 
-  | Prefijo | Uso | Ejemplo |
+  ```
+  funcionalidad/16-registrar-y-dividir-gastos
+  └─ tipo ─────┘ └┘ └─ qué hace, con verbos ─┘
+                  número de paso en el plan
+  ```
+
+  | Tipo | Cuándo se usa | Ejemplo |
   |---|---|---|
-  | `feature/NN-slug` | funcionalidad del plan | `feature/16-gastos` |
-  | `chore/NN-slug` | infraestructura, tooling | `chore/03-docker-ci` |
-  | `spike/NN-slug` | prueba de concepto descartable | `spike/05-realtime` |
-  | `fix/slug` | corrección de bug | `fix/saldo-redondeo` |
-  | `docs/slug` | solo documentación | `docs/ux-moodboard` |
+  | `base/` | Infraestructura y herramientas: lo que la app necesita para existir, pero que el usuario no ve | `base/01-backend-fastapi` |
+  | `funcionalidad/` | Algo que el usuario puede hacer (una o varias historias US###) | `funcionalidad/07-invitar-al-grupo` |
+  | `diseno/` | Cambios de look & feel desde `docs/ux/` | `diseno/estilo-visual-v1` |
+  | `experimento/` | Prueba de concepto para validar algo riesgoso; puede descartarse | `experimento/05-tiempo-real` |
+  | `arreglo/` | Corrección de un bug (sin número) | `arreglo/saldo-mal-redondeado` |
+  | `docs/` | Solo documentación (sin número) | `docs/moodboard-colores` |
+
+  Reglas: minúsculas, palabras separadas con guiones, sin tildes ni ñ (git y algunas terminales las manejan mal), y como máximo 5–6 palabras. El md de la rama se llama igual que la rama sin el tipo: `docs/features/16-registrar-y-dividir-gastos.md`.
 
 - **Commits**: [Conventional Commits](https://www.conventionalcommits.org/es/v1.0.0/) en español, en imperativo, con ID de historia cuando aplica:
   ```
   feat(finanzas): dividir gasto en partes iguales (US114)
   fix(nucleo): impedir aceptar invitación vencida
   test(decisiones): cubrir desempate de encuesta
-  docs(features): actualizar estado de 16-gastos
+  docs(features): actualizar estado de 16-registrar-y-dividir-gastos
   chore(ci): cachear dependencias de uv
   ```
-  Tipos: `feat`, `fix`, `refactor`, `test`, `docs`, `chore`, `style`, `perf`, `ci`, `build`.
+  Tipos de commit (son palabras clave estándar en inglés, las entienden herramientas como generadores de changelog; el resto del mensaje va en español):
+
+  | Tipo | Significa |
+  |---|---|
+  | `feat` | funcionalidad nueva |
+  | `fix` | arreglo de un bug |
+  | `refactor` | reorganizar código sin cambiar lo que hace |
+  | `test` | agregar o corregir tests |
+  | `docs` | solo documentación |
+  | `build` | dependencias o empaquetado |
+  | `ci` | integración continua (GitHub Actions) |
+  | `chore` | tareas de mantenimiento que no entran en las otras |
+  | `style` | formato, sin cambios de lógica |
+  | `perf` | mejora de rendimiento |
 - **PRs** chicos y enfocados (ideal < 400 líneas). Si crece, se parte. Merge con **squash**.
 - Nunca: `push --force` sobre `main`, commitear `.env`, mergear con CI rojo.
 
 ## 3. Ciclo de una feature
 
-1. Debate → `docs/features/NN-slug.md` desde [`_TEMPLATE.md`](docs/features/_TEMPLATE.md) (primer commit de la rama).
+1. Debate → `docs/features/NN-descripcion.md` desde [`_TEMPLATE.md`](docs/features/_TEMPLATE.md) (primer commit de la rama).
 2. Issues de GitHub para cada `US###` de la feature.
 3. **Backend**: modelo + migración → `domain.py` con tests (TDD si hay lógica) → repository/service → router + tests de API.
 4. `npm run api:generate` en el frontend.

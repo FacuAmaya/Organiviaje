@@ -7,7 +7,7 @@ Espacio de **exploración**. Acá se junta material sin filtro; cuando algo est�
 ## Proceso
 
 ```
-01-investigacion  →  02-moodboard  →  03-propuestas  →  debate  →  04-design-system.md + UX.md  →  feature/ux-look-and-feel-vN
+01-investigacion  →  02-moodboard  →  03-propuestas  →  debate  →  04-design-system.md + UX.md  →  diseno/estilo-visual-vN
    (referencias)      (estilo)          (ideas propias)              (tokens decididos)              (se aplica a toda la app)
 ```
 
@@ -16,7 +16,7 @@ Espacio de **exploración**. Acá se junta material sin filtro; cuando algo est�
 3. **Proponer** — en `03-propuestas/` bocetos, wireframes (papel fotografiado, Figma, Excalidraw…), ideas de pantallas concretas.
 4. **Debatir** — cuando tengas algo más o menos cosechado, lo traés y lo discutimos.
 5. **Consolidar** — lo decidido se escribe en `04-design-system.md` (tokens y componentes) y en `UX.md` (principios y flujos).
-6. **Aplicar** — una rama `feature/ux-look-and-feel-vN` actualiza el tema de la app. Como todo usa tokens, el cambio es global.
+6. **Aplicar** — una rama `diseno/estilo-visual-vN` actualiza el tema de la app. Como todo usa tokens, el cambio es global.
 
 ## Convenciones para el material
 
@@ -45,4 +45,4 @@ Espacio de **exploración**. Acá se junta material sin filtro; cuando algo est�
 
 | Versión | Fecha | Qué se decidió | Rama |
 |---|---|---|---|
-| v0 | 2026-11-04 | Tema neutro provisorio de shadcn | `chore/02-frontend-skeleton` |
+| v0 | 2026-11-04 | Tema neutro provisorio de shadcn | `base/02-frontend-nextjs` |

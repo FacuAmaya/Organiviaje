@@ -2,7 +2,7 @@
 
 | Rama | Estado | Responsable(s) | Inicio | Cierre | PR |
 |---|---|---|---|---|---|
-| `chore/00-repo-setup` | 🚧 en curso | @FacuAmaya | 2026-11-04 | — | #— |
+| `base/00-preparar-repositorio` | 🚧 en curso | @FacuAmaya | 2026-11-04 | — | #— |
 
 ## Objetivo
 
@@ -24,6 +24,8 @@ No cubre historias de usuario: es una tarea de fundaciones (Fase 0).
 | `CLAUDE.md` apunta a `AGENTS.md` | Una sola fuente de reglas para personas e IA | Reglas duplicadas |
 | Commit inicial en `main` antes de ramificar | GitHub Flow necesita una base para PRs | Arrancar con la rama directamente |
 | PDF del plan generado desde el md | El md es la fuente; el PDF es para leer/compartir | Mantener el PDF a mano |
+| Ramas en español: `tipo/NN-que-hace` (`base/`, `funcionalidad/`, `diseno/`, `experimento/`, `arreglo/`, `docs/`) | Cualquier integrante entiende qué hace cada rama sin conocer la jerga | Convención en inglés (`feature/`, `chore/`, `spike/`) |
+| Commits solo a nombre de los integrantes (sin coautoría de IA) | Decisión del equipo | Etiqueta `Co-Authored-By` en cada commit |
 
 ## Diseño
 
@@ -39,7 +41,7 @@ Organiviaje/
 └── docs/
     ├── plan/       README.md · plan-desarrollo.md · plan-desarrollo.pdf
     ├── adr/        README.md · 0001…0004
-    ├── features/   _TEMPLATE.md · 00-repo-setup.md
+    ├── features/   _TEMPLATE.md · 00-preparar-repositorio.md
     ├── ux/         README.md · 01-investigacion/ · 02-moodboard/ · 03-propuestas/ · 04-design-system.md
     └── analisis/   5 PDFs del TP
 ```
@@ -47,7 +49,7 @@ Organiviaje/
 ## Hecho
 
 - [x] Commit inicial en `main`.
-- [x] Rama `chore/00-repo-setup`.
+- [x] Rama `base/00-preparar-repositorio`.
 - [x] Documentación general: README, CONTEXT, ARCHITECTURE, UX, AGENTS, CLAUDE, CHANGELOG.
 - [x] ADRs 0001–0004 + índice.
 - [x] Template de feature y este documento.
@@ -67,7 +69,7 @@ Organiviaje/
 ## Cómo probarlo
 
 ```bash
-git switch chore/00-repo-setup
+git switch base/00-preparar-repositorio
 git log --oneline            # commits convencionales
 open docs/plan/plan-desarrollo.pdf
 ```

@@ -26,6 +26,6 @@ Los usuarios se registran con email y contraseña y acceden a viajes por invitac
 
 - ✅ Tokens no accesibles desde JS (mitiga XSS).
 - ✅ Logout real gracias a la revocación del refresh.
-- ⚠️ En deploy, front y API en dominios distintos: hay que usar un subdominio común o un proxy de Next.js (`/api/*` → backend) para que las cookies sean first-party. Se resuelve en `chore/20-deploy`.
+- ⚠️ En deploy, front y API en dominios distintos: hay que usar un subdominio común o un proxy de Next.js (`/api/*` → backend) para que las cookies sean first-party. Se resuelve en `base/20-publicar-la-app`.
 - ⚠️ Necesitamos protección CSRF en métodos que modifican estado (SameSite=Lax + verificación de `Origin`).
 - 🔜 Login con Google puede sumarse después sin cambiar el modelo (R3, opcional).

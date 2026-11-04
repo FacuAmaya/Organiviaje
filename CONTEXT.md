@@ -89,31 +89,31 @@ Leyenda: ✅ hecha · 🚧 en curso · ⏳ pendiente
 ### Fase 0 — Fundaciones
 | # | Rama | Estado | Doc |
 |---|---|---|---|
-| 00 | `chore/00-repo-setup` | 🚧 | [00-repo-setup](docs/features/00-repo-setup.md) |
-| 01 | `chore/01-backend-skeleton` | ⏳ | |
-| 02 | `chore/02-frontend-skeleton` | ⏳ | |
-| 03 | `chore/03-docker-ci` | ⏳ | |
-| 04 | `feature/04-auth` | ⏳ | |
-| 05 | `spike/05-realtime` | ⏳ | |
+| 00 | `base/00-preparar-repositorio` | 🚧 | [00-preparar-repositorio](docs/features/00-preparar-repositorio.md) |
+| 01 | `base/01-backend-fastapi` | ⏳ | |
+| 02 | `base/02-frontend-nextjs` | ⏳ | |
+| 03 | `base/03-docker-y-ci` | ⏳ | |
+| 04 | `funcionalidad/04-registro-e-inicio-de-sesion` | ⏳ | |
+| 05 | `experimento/05-tiempo-real` | ⏳ | |
 
 ### R1 — MVP
 | # | Rama | Historias | Estado |
 |---|---|---|---|
-| 06 | `feature/06-viajes` | US001, US005, US010 | ⏳ |
-| 07 | `feature/07-invitaciones` | US003, US004, US006 | ⏳ |
-| 08 | `feature/08-propuestas` | US013, US020, US025–US030, US035, US039, US063, US064, US071, US072 | ⏳ |
-| 09 | `feature/09-comentarios` | US037, US151 | ⏳ |
-| 10 | `feature/10-votaciones` | US015, US041, US044, US047, US053, US054 | ⏳ |
-| 11 | `feature/11-decisiones` | US016, US021, US056, US057, US061, US068 | ⏳ |
-| 12 | `feature/12-presupuesto` | US022, US141, US142, US147 | ⏳ |
-| 13 | `feature/13-itinerario` | US075, US077, US078, US079, US090 | ⏳ |
-| 14 | `feature/14-mapa` | US029, US043, US066, US091–US093, US097, US099, US101, US109 | ⏳ |
-| 15 | `feature/15-ubicacion-tiempo-real` | US183, US184 | ⏳ |
-| 16 | `feature/16-gastos` | US111–US115, US118, US120 | ⏳ |
-| 17 | `feature/17-balances-liquidaciones` | US131–US134, US176 | ⏳ |
-| 18 | `feature/18-hoy` | US167, US168 | ⏳ |
-| UX | `feature/ux-look-and-feel-vN` | Look & feel desde `docs/ux/` | ⏳ |
-| 19 | `feature/19-pwa` | Instalable en celular | ⏳ |
-| 20 | `chore/20-deploy` | Deploy + `v1.0.0` | ⏳ |
+| 06 | `funcionalidad/06-crear-y-ver-viajes` | US001, US005, US010 | ⏳ |
+| 07 | `funcionalidad/07-invitar-al-grupo` | US003, US004, US006 | ⏳ |
+| 08 | `funcionalidad/08-proponer-ideas` | US013, US020, US025–US030, US035, US039, US063, US064, US071, US072 | ⏳ |
+| 09 | `funcionalidad/09-comentar-propuestas` | US037, US151 | ⏳ |
+| 10 | `funcionalidad/10-votar-propuestas` | US015, US041, US044, US047, US053, US054 | ⏳ |
+| 11 | `funcionalidad/11-confirmar-decisiones` | US016, US021, US056, US057, US061, US068 | ⏳ |
+| 12 | `funcionalidad/12-presupuesto-del-viaje` | US022, US141, US142, US147 | ⏳ |
+| 13 | `funcionalidad/13-armar-itinerario` | US075, US077, US078, US079, US090 | ⏳ |
+| 14 | `funcionalidad/14-mapa-del-viaje` | US029, US043, US066, US091–US093, US097, US099, US101, US109 | ⏳ |
+| 15 | `funcionalidad/15-ubicacion-en-tiempo-real` | US183, US184 | ⏳ |
+| 16 | `funcionalidad/16-registrar-y-dividir-gastos` | US111–US115, US118, US120 | ⏳ |
+| 17 | `funcionalidad/17-balances-y-deudas` | US131–US134, US176 | ⏳ |
+| 18 | `funcionalidad/18-agenda-de-hoy` | US167, US168 | ⏳ |
+| UX | `diseno/estilo-visual-vN` | Look & feel desde `docs/ux/` | ⏳ |
+| 19 | `funcionalidad/19-instalar-en-celular` | Instalable en celular | ⏳ |
+| 20 | `base/20-publicar-la-app` | Deploy + `v1.0.0` | ⏳ |
 
 R2 (ramas 21–35) y R3 (ramas 36–44): ver [plan de desarrollo](docs/plan/plan-desarrollo.md#6-hoja-de-ruta-de-ramas).

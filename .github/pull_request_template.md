@@ -2,7 +2,7 @@
 
 <!-- Resumen en 2-3 líneas. Título del PR en formato Conventional Commit: feat(modulo): descripción -->
 
-**Feature:** `docs/features/NN-slug.md`
+**Feature:** `docs/features/NN-descripcion.md`
 **Historias:** Closes #… <!-- un "Closes #N" por issue de historia -->
 
 ## Cambios

@@ -22,7 +22,7 @@ Resultado buscado: una web app deployada, instalable en el celular como PWA y us
 
 ## Cómo levantarlo
 
-> Disponible a partir de la rama `chore/03-docker-ci`.
+> Disponible a partir de la rama `base/03-docker-y-ci`.
 
 ```bash
 cp .env.example .env
@@ -51,7 +51,7 @@ docker compose up
 Resumen (detalle en [AGENTS.md](AGENTS.md)):
 
 1. Tomá un issue del tablero (cada historia `US###` es un issue).
-2. Creá la rama desde `main` actualizada: `feature/NN-slug`.
-3. Primer commit: `docs/features/NN-slug.md` a partir de [`_TEMPLATE.md`](docs/features/_TEMPLATE.md).
+2. Creá la rama desde `main` actualizada: `funcionalidad/NN-descripcion`.
+3. Primer commit: `docs/features/NN-descripcion.md` a partir de [`_TEMPLATE.md`](docs/features/_TEMPLATE.md).
 4. Commits con [Conventional Commits](https://www.conventionalcommits.org/es/v1.0.0/) e ID de historia.
 5. Abrí un PR con el template, pedí revisión y mergeá con squash cuando el CI esté verde.

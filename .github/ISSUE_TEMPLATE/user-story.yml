@@ -50,4 +50,4 @@ body:
     id: feature
     attributes:
       label: Feature / rama
-      placeholder: feature/16-gastos
+      placeholder: funcionalidad/16-registrar-y-dividir-gastos

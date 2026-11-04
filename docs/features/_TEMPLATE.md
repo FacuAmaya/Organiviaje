@@ -2,7 +2,7 @@
 
 | Rama | Estado | Responsable(s) | Inicio | Cierre | PR |
 |---|---|---|---|---|---|
-| `feature/NN-slug` | 🚧 en curso | @usuario | AAAA-MM-DD | — | #— |
+| `funcionalidad/NN-descripcion` | 🚧 en curso | @usuario | AAAA-MM-DD | — | #— |
 
 ## Objetivo
 
