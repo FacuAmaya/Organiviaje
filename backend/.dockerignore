@@ -1,0 +1,13 @@
+# Lo que NO se manda a Docker al construir la imagen (más rápido y sin secretos).
+.venv
+.env
+.env.*
+__pycache__
+*.pyc
+.pytest_cache
+.mypy_cache
+.ruff_cache
+.coverage
+htmlcov
+Dockerfile
+.dockerignore
