@@ -1,0 +1,87 @@
+[project]
+name = "organiviaje-api"
+version = "0.1.0"
+description = "API de Organiviaje: organizador colaborativo de viajes grupales"
+authors = [{ name = "FacuAmaya" }]
+requires-python = ">=3.13,<3.14"
+dependencies = [
+    "alembic>=1.20.1",
+    "asyncpg>=0.32.0",
+    "fastapi>=0.162.0",
+    "pydantic-settings>=2.16.2",
+    "sqlalchemy[asyncio]>=2.1.8",
+    "uvicorn[standard]>=0.54.0",
+]
+
+[dependency-groups]
+dev = [
+    "httpx>=0.28.1",
+    "mypy>=2.4.1",
+    "pytest>=9.2.0",
+    "pytest-asyncio>=1.4.1.post1",
+    "pytest-cov>=7.1.0",
+    "ruff>=0.17.3",
+]
+
+[tool.uv]
+package = false
+
+# ───────────────────────── Ruff ─────────────────────────
+[tool.ruff]
+target-version = "py313"
+line-length = 100
+extend-exclude = ["alembic/versions"]
+
+[tool.ruff.lint]
+select = [
+    "E", "W",   # pycodestyle
+    "F",        # pyflakes
+    "I",        # isort
+    "B",        # bugbear
+    "UP",       # pyupgrade
+    "N",        # pep8-naming
+    "S",        # bandit (seguridad)
+    "ASYNC",    # errores comunes en código async
+    "C4",       # comprehensions
+    "SIM",      # simplificaciones
+    "RUF",      # reglas propias de ruff
+]
+ignore = [
+    "RUF001", "RUF002", "RUF003",  # permitir caracteres en español (á, é, ñ, «») en strings/comentarios
+]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**" = ["S101", "S105", "S106"]  # assert y contraseñas de prueba en tests
+
+[tool.ruff.lint.flake8-bugbear]
+# FastAPI usa llamadas en defaults de parámetros (Depends, Query…)
+extend-immutable-calls = ["fastapi.Depends", "fastapi.Query", "fastapi.Path", "fastapi.Body"]
+
+# ───────────────────────── mypy ─────────────────────────
+[tool.mypy]
+python_version = "3.13"
+strict = true
+plugins = ["pydantic.mypy"]
+files = ["app"]
+
+[tool.pydantic-mypy]
+init_forbid_extra = true
+init_typed = true
+warn_required_dynamic_aliases = true
+
+# ───────────────────────── pytest ─────────────────────────
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "session"
+asyncio_default_test_loop_scope = "session"
+addopts = ["-ra", "--strict-markers"]
+markers = ["db: requiere una base PostgreSQL disponible (DATABASE_URL)"]
+
+[tool.coverage.run]
+source = ["app"]
+branch = true
+
+[tool.coverage.report]
+show_missing = true
+skip_covered = true
