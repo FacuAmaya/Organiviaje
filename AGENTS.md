@@ -10,12 +10,18 @@ Instrucciones para **cualquiera que escriba código en este repo**: integrantes 
 
 ## 1. Comandos
 
-> Se completan a medida que se crean los esqueletos (ramas 01–03). Los de backend se corren desde `backend/`.
+Hay dos formas de trabajar: **todo en Docker** (lo más simple) o **base en Docker y API/web en tu compu** (tests más rápidos). Los comandos de backend se corren desde `backend/` y los de frontend desde `frontend/`.
 
 | Tarea | Comando |
 |---|---|
-| Primera vez | `cp .env.example .env` |
-| Base de datos (Postgres en el puerto 5433) | `docker compose up -d db` |
+| Primera vez | `cp .env.example .env` (ajustá los puertos si están ocupados) y `uvx pre-commit install` |
+| **Levantar todo** (db, redis, api, web) | `docker compose up` → web en `WEB_PORT`, API en `API_PORT` |
+| Reconstruir imágenes (cambiaron dependencias) | `docker compose up --build` |
+| Ver logs de un servicio | `docker compose logs -f api` |
+| Apagar todo | `docker compose down` (con `-v` borra también la base) |
+| Solo la base (Postgres en el puerto 5433) | `docker compose up -d db` |
+| Correr los chequeos como el CI | `docker run --rm $(docker build -q --target test backend)` (ídem `frontend`) |
+| Chequeos de pre-commit a mano | `uvx pre-commit run --all-files` |
 | Backend: instalar dependencias | `uv sync` |
 | Backend: levantar API | `uv run uvicorn app.main:app --reload` → http://localhost:8000/docs |
 | Backend: tests + cobertura | `uv run pytest --cov=app` |
@@ -31,7 +37,7 @@ Instrucciones para **cualquiera que escriba código en este repo**: integrantes 
 | Frontend: e2e (navegador real) | `pnpm test:e2e` (la primera vez: `pnpm exec playwright install chromium`) |
 | Frontend: lint + tipos + formato | `pnpm lint && pnpm typecheck && pnpm format:check` (arreglar formato: `pnpm format`) |
 | Frontend: agregar componente shadcn | `pnpm dlx shadcn@latest add <componente>` |
-| Regenerar cliente de la API | con el backend levantado: `pnpm api:generate` (commitear `src/lib/api/schema.d.ts`) |
+| Regenerar cliente de la API | `pnpm api:generate` (no hace falta levantar el backend; commitear `src/lib/api/schema.d.ts`; el CI falla si quedó desactualizado) |
 | Build de producción | `pnpm build` |
 
 ## 2. Flujo de Git
@@ -80,6 +86,7 @@ Instrucciones para **cualquiera que escriba código en este repo**: integrantes 
   | `perf` | mejora de rendimiento |
 - **PRs** chicos y enfocados (ideal < 400 líneas). Si crece, se parte. Merge con **squash**.
 - Nunca: `push --force` sobre `main`, commitear `.env`, mergear con CI rojo.
+- **CI:** cada PR corre `.github/workflows/ci.yml` (solo las partes cuyos archivos cambiaron). Para mergear hace falta el check **CI ok** en verde.
 
 ## 3. Ciclo de una feature
 

@@ -1,0 +1,195 @@
+# Integración continua: GitHub corre esto en cada PR y en cada push a main.
+# Si algo falla, el PR queda en rojo y no se puede mergear (protección de main).
+#
+# Para no perder tiempo, cada parte corre solo si cambiaron sus archivos:
+#   backend  → backend/**          frontend → frontend/**
+#   contrato → backend o frontend (verifica que schema.d.ts esté al día con la API)
+#   docker   → Dockerfiles o dependencias (verifica que las imágenes de producción se construyan)
+# El job final "CI ok" es el único que exige la protección de main.
+
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  cambios:
+    name: Detectar cambios
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: read
+    outputs:
+      backend: ${{ steps.filtro.outputs.backend }}
+      frontend: ${{ steps.filtro.outputs.frontend }}
+      docker: ${{ steps.filtro.outputs.docker }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dorny/paths-filter@v3
+        id: filtro
+        with:
+          filters: |
+            backend:
+              - 'backend/**'
+              - '.github/workflows/ci.yml'
+            frontend:
+              - 'frontend/**'
+              - '.github/workflows/ci.yml'
+            docker:
+              - '**/Dockerfile'
+              - '**/.dockerignore'
+              - 'docker-compose.yml'
+              - 'backend/uv.lock'
+              - 'frontend/pnpm-lock.yaml'
+
+  backend:
+    name: Backend (lint, tipos, tests)
+    needs: cambios
+    if: needs.cambios.outputs.backend == 'true'
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: organiviaje
+          POSTGRES_PASSWORD: organiviaje
+          POSTGRES_DB: organiviaje_test
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd "pg_isready -U organiviaje" --health-interval 5s --health-timeout 3s --health-retries 10
+    env:
+      DATABASE_URL: postgresql+asyncpg://organiviaje:organiviaje@localhost:5432/organiviaje_test
+      TEST_DATABASE_URL: postgresql+asyncpg://organiviaje:organiviaje@localhost:5432/organiviaje_test
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+        with:
+          enable-cache: true
+          cache-dependency-glob: backend/uv.lock
+      - run: uv sync --frozen
+      - name: Lint y formato (ruff)
+        run: uv run ruff check . && uv run ruff format --check .
+      - name: Tipos (mypy)
+        run: uv run mypy app tests
+      - name: Migraciones aplican y coinciden con los modelos
+        run: uv run alembic upgrade head && uv run alembic check
+      - name: Tests (pytest)
+        run: uv run pytest --cov=app --cov-report=term-missing
+
+  frontend:
+    name: Frontend (lint, tipos, tests, build, e2e)
+    needs: cambios
+    if: needs.cambios.outputs.frontend == 'true'
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          package_json_file: frontend/package.json
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+          cache-dependency-path: frontend/pnpm-lock.yaml
+      - run: pnpm install --frozen-lockfile
+      - name: Lint
+        run: pnpm lint
+      - name: Tipos
+        run: pnpm typecheck
+      - name: Formato (prettier)
+        run: pnpm format:check
+      - name: Tests de componentes (vitest)
+        run: pnpm test
+      - name: Build de producción
+        run: pnpm build
+      - name: Instalar navegador para e2e
+        run: pnpm exec playwright install --with-deps chromium
+      - name: Tests e2e (playwright, celular y escritorio)
+        run: pnpm test:e2e
+      - name: Guardar reporte de e2e si falló
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: reporte-playwright
+          path: frontend/playwright-report
+          retention-days: 7
+
+  contrato:
+    name: Contrato API ↔ frontend al día
+    needs: cambios
+    if: needs.cambios.outputs.backend == 'true' || needs.cambios.outputs.frontend == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+        with:
+          enable-cache: true
+          cache-dependency-glob: backend/uv.lock
+      - uses: pnpm/action-setup@v4
+        with:
+          package_json_file: frontend/package.json
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+          cache-dependency-path: frontend/pnpm-lock.yaml
+      - name: Instalar dependencias
+        run: |
+          cd backend && uv sync --frozen --no-dev
+          cd ../frontend && pnpm install --frozen-lockfile
+      - name: Regenerar schema.d.ts y comparar con el commiteado
+        working-directory: frontend
+        run: |
+          pnpm api:generate
+          git diff --exit-code src/lib/api/schema.d.ts || {
+            echo "::error::schema.d.ts está desactualizado. Corré 'pnpm api:generate' en frontend/ y commiteá el resultado."
+            exit 1
+          }
+
+  docker:
+    name: Imágenes de producción
+    needs: cambios
+    if: needs.cambios.outputs.docker == 'true'
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        servicio: [backend, frontend]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: docker/setup-buildx-action@v3
+      - name: Construir ${{ matrix.servicio }} (target produccion)
+        uses: docker/build-push-action@v6
+        with:
+          context: ${{ matrix.servicio }}
+          target: produccion
+          push: false
+          cache-from: type=gha,scope=${{ matrix.servicio }}
+          cache-to: type=gha,mode=max,scope=${{ matrix.servicio }}
+
+  ci-ok:
+    name: CI ok
+    if: always()
+    needs: [backend, frontend, contrato, docker]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Todos los jobs pasaron o no hacía falta correrlos
+        run: |
+          echo '${{ toJSON(needs) }}'
+          if ${{ contains(needs.*.result, 'failure') || contains(needs.*.result, 'cancelled') }}; then
+            echo "::error::Algún job falló."
+            exit 1
+          fi

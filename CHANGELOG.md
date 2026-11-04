@@ -18,3 +18,7 @@ Todos los cambios relevantes del proyecto. Formato basado en [Keep a Changelog](
 - ADR 0006: base del frontend.
 - Especificaciones de las 18 features del MVP (pasos 03–20) con historias, criterios de aceptación, dependencias y diseño propuesto; índice con mapa de dependencias.
 - ADR 0007: specs y ramas del MVP creadas por adelantado, con tablero.
+- Docker completo: `docker compose up` levanta db, redis, api y web con recarga automática; Dockerfiles con etapas desarrollo, test y producción; puertos configurables.
+- CI en GitHub Actions: backend, frontend (con build y e2e), contrato API ↔ frontend e imágenes de producción, con filtros por carpeta.
+- Chequeos de pre-commit (ruff, prettier, higiene de archivos).
+- `pnpm api:generate` funciona sin levantar el backend.

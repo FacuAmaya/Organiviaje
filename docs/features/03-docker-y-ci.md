@@ -2,7 +2,7 @@
 
 | Rama | Estado | Responsable(s) | Issue | PR |
 |---|---|---|---|---|
-| `base/03-docker-y-ci` | ⏳ pendiente | — *(asignarse en el issue)* | [#5](https://github.com/FacuAmaya/Organiviaje/issues/5) | #— |
+| `base/03-docker-y-ci` | 👀 en revisión | @FacuAmaya | [#5](https://github.com/FacuAmaya/Organiviaje/issues/5) | [#25](https://github.com/FacuAmaya/Organiviaje/pull/25) |
 
 > **Cómo usar este documento:** antes de empezar se lee y se debate (sección *Preguntas abiertas*); mientras se trabaja se completan *Decisiones*, *Hecho* y *Falta*; al cerrar se revisa *Cómo probarlo*. Lo que está en *Diseño propuesto* es un punto de partida, no una obligación: si en el debate se decide otra cosa, se actualiza acá.
 
@@ -45,32 +45,60 @@ Sin cambios de base de datos.
 
 ## Preguntas abiertas para el debate
 
-- [ ] ¿Los e2e corren en cada PR o solo al mergear a `main` (son los más lentos)?
-- [ ] ¿`pre-commit` (Python) o `lefthook` (binario, sin Python) para los hooks?
-- [ ] ¿Cacheamos las imágenes de Docker en CI o alcanza con cachear uv/pnpm?
+- [x] ¿Los e2e corren en cada PR o solo al mergear a `main` (son los más lentos)? → **en cada PR**
+- [x] ¿`pre-commit` (Python) o `lefthook` (binario, sin Python) para los hooks? → **pre-commit** con `uvx`
+- [x] ¿Cacheamos las imágenes de Docker en CI o alcanza con cachear uv/pnpm? → **ambos** (el cache de capas de Docker en GitHub son 2 líneas)
 
 ## Decisiones del debate
 
 | Decisión | Por qué | Alternativa descartada |
 |---|---|---|
-| | | |
+| **Un Dockerfile por servicio con 4 etapas**: `base`, `desarrollo`, `test`, `produccion` | Las versiones comparten la base: una librería nueva se agrega en un solo lugar. Idea del equipo: tener una imagen para desarrollo con todo, otra para probar y otra liviana | Un Dockerfile por uso (3 archivos que hay que mantener sincronizados) |
+| En desarrollo el código se **monta como volumen** con recarga automática | Guardás un archivo y se ve el cambio sin reconstruir la imagen | Reconstruir la imagen en cada cambio |
+| **Puertos del host configurables** en `.env` (`API_PORT`, `WEB_PORT`, `POSTGRES_PORT`, `REDIS_PORT`) | En la máquina de FacuAmaya otro proyecto usa 3000 y 8000 | Puertos fijos |
+| Redis en el puerto **6380** del host | Evitar choque con un Redis local | 6379 |
+| Imágenes de producción con **usuario sin privilegios** y `HEALTHCHECK` | Seguridad básica; la plataforma de deploy sabe si la app está viva | Correr como root |
+| Next.js con `output: "standalone"` | La imagen de producción pesa ~200 MB en vez de ~1 GB | Copiar todo `node_modules` |
+| CI con **filtros por carpeta** y un job final **`CI ok`** | Un PR que solo toca el frontend no corre el backend; la protección de `main` exige un único check | Correr todo siempre · exigir cada job por separado |
+| Job **contrato**: regenera `schema.d.ts` y falla si difiere | Nadie mergea un cambio de API sin actualizar el frontend | Confiar en acordarse |
+| `pnpm api:generate` **exporta el OpenAPI desde el código** (`backend/scripts/exportar_openapi.py`) | Funciona sin levantar el backend y es idéntico en CI y en tu compu | Leerlo del servidor en `:8000` |
+| e2e en cada PR | Hoy tardan segundos | Solo en `main` |
+| `pre-commit` con `uvx` | Ya usamos `uv`; no hay que instalar nada más | `lefthook` |
 
 ## Hecho
 
-- [ ] Debate hecho y preguntas abiertas respondidas
-- [ ] Tests (unitarios, integración y e2e) en verde
-- [ ] Docs actualizados (este archivo, CONTEXT, UX si hay pantallas, CHANGELOG)
+- [x] Debate hecho y preguntas abiertas respondidas
+- [x] `backend/Dockerfile` y `frontend/Dockerfile` con etapas `base` · `desarrollo` · `test` · `produccion` + `.dockerignore`
+- [x] `docker-compose.yml` con `db`, `redis`, `api` y `web`, healthchecks y dependencias en orden (db/redis → api → web)
+- [x] Recarga automática verificada en API y web dentro de Docker
+- [x] Etapa `test` verificada: backend 11 tests + lint + tipos; frontend 8 tests + lint + tipos + formato
+- [x] Imágenes de producción verificadas: API (234 MB, usuario `app`, sin `/docs`) y web standalone (205 MB)
+- [x] `.github/workflows/ci.yml`: backend, frontend (con build y e2e), contrato, imágenes de producción y `CI ok`
+- [x] `pnpm api:generate` sin servidor
+- [x] `.pre-commit-config.yaml` (higiene de archivos, claves privadas, ruff, prettier)
+- [x] CI en verde en el PR (#25, 7/7 jobs en el primer intento)
+- [ ] Protección de `main` exigiendo `CI ok`
+- [x] Docs actualizados (este archivo, AGENTS, README, CONTEXT, CHANGELOG)
 
 ## Falta / deuda técnica / ideas para después
 
-- …
+- Escaneo de vulnerabilidades de dependencias (Dependabot / `pip-audit` / `pnpm audit`) → cuando haya deploy (rama 20).
+- Publicar las imágenes en un registry (GitHub Container Registry) → rama 20.
+- Si los e2e crecen mucho, moverlos a un job aparte o solo a `main`.
 
 ## Cómo probarlo
 
 ```bash
-cp .env.example .env
-docker compose up
-# API → http://localhost:${API_PORT}/health · Web → http://localhost:${WEB_PORT}
+cp .env.example .env                       # ajustá los puertos si están ocupados
+docker compose up                          # db + redis + api + web
+# API → http://localhost:8000/health · Web → http://localhost:3000 (o los puertos de tu .env)
+
+docker compose up -d db                    # solo la base (para correr API y web en tu compu)
+docker build --target test backend         # etapa test del backend
+docker run --rm $(docker build -q --target test frontend)   # corre los chequeos del frontend
+
+uvx pre-commit install                     # una vez: activa los chequeos en cada commit
+uvx pre-commit run --all-files             # correrlos a mano
 ```
 
 Flujo manual:

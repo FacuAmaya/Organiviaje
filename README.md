@@ -18,30 +18,20 @@ Resultado buscado: una web app deployada, instalable en el celular como PWA y us
 
 ## Estado
 
-🚧 **Fase 0 — Fundaciones.** Esqueletos de backend y frontend listos; próximo: Docker completo y CI. Ver el estado detallado en [CONTEXT.md](CONTEXT.md#estado-del-proyecto).
+🚧 **Fase 0 — Fundaciones.** Base lista: backend, frontend, Docker y CI. Próximo: registro e inicio de sesión. Ver el estado detallado en [CONTEXT.md](CONTEXT.md#estado-del-proyecto).
 
 ## Cómo levantarlo
 
-Requisitos: Docker, [uv](https://docs.astral.sh/uv/) y Node 24 (con corepack para pnpm).
+Requisito: [Docker](https://www.docker.com/products/docker-desktop/).
 
 ```bash
-cp .env.example .env
-docker compose up -d db          # PostgreSQL en el puerto 5433
-cd backend
-uv sync
-uv run alembic upgrade head
-uv run uvicorn app.main:app --reload
-# API → http://localhost:8000/docs
-
-# en otra terminal
-cd frontend
-cp .env.example .env.local
-pnpm install                     # pnpm se activa con: corepack enable pnpm
-pnpm dev
+cp .env.example .env     # si los puertos 3000/8000 están ocupados, cambialos acá
+docker compose up
 # Web → http://localhost:3000
+# API → http://localhost:8000/docs
 ```
 
-> En la rama `base/03-docker-y-ci` todo pasa a levantarse con un solo `docker compose up` (API, web, base y Redis).
+Para desarrollar con tests más rápidos (API y web en tu compu, base en Docker) necesitás además [uv](https://docs.astral.sh/uv/) y Node 24 (`corepack enable pnpm`). Los comandos están en [AGENTS.md](AGENTS.md#1-comandos).
 
 ## Documentación
 

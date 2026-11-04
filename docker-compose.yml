@@ -1,7 +1,14 @@
-# Entorno de desarrollo local.
-# Postgres se expone en el puerto 5433 del host para no chocar con un Postgres instalado localmente.
-# Por ahora solo la base de datos; api, web y redis se suman en la rama base/03-docker-y-ci.
-#   docker compose up -d db
+# Entorno de desarrollo local: base, Redis, API y web con un solo comando.
+#
+#   cp .env.example .env        # una sola vez
+#   docker compose up           # levanta todo (Ctrl+C para frenar)
+#   docker compose up -d db     # solo la base, si preferís correr API y web en tu compu
+#
+# Los puertos del host se configuran en .env (API_PORT, WEB_PORT, POSTGRES_PORT, REDIS_PORT)
+# para poder convivir con otros proyectos. Adentro de la red de Docker los servicios se
+# llaman por su nombre (db, redis, api).
+
+name: organiviaje
 
 services:
   db:
@@ -21,6 +28,66 @@ services:
       interval: 5s
       timeout: 3s
       retries: 10
+
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+    ports:
+      - "${REDIS_PORT:-6380}:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  api:
+    build:
+      context: ./backend
+      target: desarrollo
+    environment:
+      APP_ENV: development
+      DATABASE_URL: postgresql+asyncpg://${POSTGRES_USER:-organiviaje}:${POSTGRES_PASSWORD:-organiviaje}@db:5432/${POSTGRES_DB:-organiviaje}
+      TEST_DATABASE_URL: postgresql+asyncpg://${POSTGRES_USER:-organiviaje}:${POSTGRES_PASSWORD:-organiviaje}@db:5432/organiviaje_test
+      REDIS_URL: redis://redis:6379/0
+      CORS_ORIGINS: http://localhost:${WEB_PORT:-3000}
+    ports:
+      - "${API_PORT:-8000}:8000"
+    volumes:
+      # El código se monta desde tu compu: al guardar un archivo, uvicorn recarga solo.
+      - ./backend:/app
+      # …pero el entorno de Python queda el de la imagen (no se pisa con el de tu compu).
+      - /app/.venv
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/health')"]
+      interval: 10s
+      timeout: 3s
+      retries: 10
+      start_period: 15s
+
+  web:
+    build:
+      context: ./frontend
+      target: desarrollo
+    environment:
+      # Lo usa el navegador de tu compu, por eso apunta al puerto del host.
+      NEXT_PUBLIC_API_URL: http://localhost:${API_PORT:-8000}
+      WATCHPACK_POLLING: "true"
+    ports:
+      - "${WEB_PORT:-3000}:3000"
+    volumes:
+      # El código se monta desde tu compu: al guardar, la página se actualiza sola.
+      - ./frontend:/app
+      # node_modules y .next quedan los de la imagen (los de macOS no sirven en Linux).
+      - /app/node_modules
+      - /app/.next
+    depends_on:
+      api:
+        condition: service_healthy
 
 volumes:
   db-data:
