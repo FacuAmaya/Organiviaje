@@ -1,0 +1,44 @@
+# OS / editores
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/*
+!.vscode/extensions.json
+*.swp
+
+# Entorno y secretos
+.env
+.env.*
+!.env.example
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+*.egg-info/
+
+# Node / Next.js
+node_modules/
+.next/
+out/
+coverage/
+*.tsbuildinfo
+next-env.d.ts
+npm-debug.log*
+
+# Playwright
+playwright-report/
+test-results/
+
+# PWA (generado en build)
+frontend/public/sw.js
+frontend/public/sw.js.map
+frontend/public/workbox-*.js
+
+# Vercel
+.vercel
