@@ -2,7 +2,7 @@
 
 | Rama | Estado | Responsable(s) | Issue | PR |
 |---|---|---|---|---|
-| `base/03-docker-y-ci` | 🚧 en curso | @FacuAmaya | [#5](https://github.com/FacuAmaya/Organiviaje/issues/5) | #— |
+| `base/03-docker-y-ci` | 👀 en revisión | @FacuAmaya | [#5](https://github.com/FacuAmaya/Organiviaje/issues/5) | [#25](https://github.com/FacuAmaya/Organiviaje/pull/25) |
 
 > **Cómo usar este documento:** antes de empezar se lee y se debate (sección *Preguntas abiertas*); mientras se trabaja se completan *Decisiones*, *Hecho* y *Falta*; al cerrar se revisa *Cómo probarlo*. Lo que está en *Diseño propuesto* es un punto de partida, no una obligación: si en el debate se decide otra cosa, se actualiza acá.
 
@@ -76,7 +76,7 @@ Sin cambios de base de datos.
 - [x] `.github/workflows/ci.yml`: backend, frontend (con build y e2e), contrato, imágenes de producción y `CI ok`
 - [x] `pnpm api:generate` sin servidor
 - [x] `.pre-commit-config.yaml` (higiene de archivos, claves privadas, ruff, prettier)
-- [ ] CI en verde en el PR
+- [x] CI en verde en el PR (#25, 7/7 jobs en el primer intento)
 - [ ] Protección de `main` exigiendo `CI ok`
 - [x] Docs actualizados (este archivo, AGENTS, README, CONTEXT, CHANGELOG)
 
