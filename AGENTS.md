@@ -83,10 +83,13 @@ Instrucciones para **cualquiera que escriba código en este repo**: integrantes 
 
 ## 3. Ciclo de una feature
 
-1. Debate → `docs/features/NN-descripcion.md` desde [`_TEMPLATE.md`](docs/features/_TEMPLATE.md) (primer commit de la rama).
-2. Issues de GitHub para cada `US###` de la feature.
+Las 18 features del MVP ya tienen spec, rama e issue (ADR 0007). Paso a paso para tomar una: [docs/features/README.md](docs/features/README.md#cómo-tomar-una-feature).
+
+0. Asignarse el issue en el tablero y **actualizar la rama con `main`** (`git fetch origin && git switch <rama> && git merge origin/main`).
+1. Debate de las *Preguntas abiertas* del `docs/features/NN-descripcion.md` → anotar las *Decisiones* (primer commit de la rama). Features nuevas (R2/R3): crear el md desde [`_TEMPLATE.md`](docs/features/_TEMPLATE.md).
+2. Mover el issue de la feature a *En curso* (cada issue lista sus `US###` como checklist).
 3. **Backend**: modelo + migración → `domain.py` con tests (TDD si hay lógica) → repository/service → router + tests de API.
-4. `npm run api:generate` en el frontend.
+4. `pnpm api:generate` en el frontend (con el backend levantado).
 5. **Frontend**: hooks → componentes → página → tests → e2e (mobile y desktop).
 6. Actualizar: md de la feature, tabla de estado de [CONTEXT.md](CONTEXT.md#estado-del-proyecto), [UX.md](UX.md) si hay pantallas nuevas, [CHANGELOG.md](CHANGELOG.md).
 7. PR con template → revisión → squash merge → cerrar issues.

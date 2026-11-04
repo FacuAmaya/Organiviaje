@@ -87,33 +87,35 @@ Backlog de 185 historias en un User Story Mapping ([docs/analisis/2-user-story-m
 Leyenda: ✅ hecha · 👀 en review (PR abierto) · 🚧 en curso · ⏳ pendiente
 
 ### Fase 0 — Fundaciones
-| # | Rama | Estado | Doc |
+| # | Rama | Estado | Spec |
 |---|---|---|---|
 | 00 | `base/00-preparar-repositorio` | ✅ | [00-preparar-repositorio](docs/features/00-preparar-repositorio.md) |
 | 01 | `base/01-backend-fastapi` | ✅ | [01-backend-fastapi](docs/features/01-backend-fastapi.md) |
-| 02 | `base/02-frontend-nextjs` | 🚧 | [02-frontend-nextjs](docs/features/02-frontend-nextjs.md) |
-| 03 | `base/03-docker-y-ci` | ⏳ | |
-| 04 | `funcionalidad/04-registro-e-inicio-de-sesion` | ⏳ | |
-| 05 | `experimento/05-tiempo-real` | ⏳ | |
+| 02 | `base/02-frontend-nextjs` | ✅ | [02-frontend-nextjs](docs/features/02-frontend-nextjs.md) |
+| 03 | `base/03-docker-y-ci` | ⏳ | [03-docker-y-ci](docs/features/03-docker-y-ci.md) |
+| 04 | `funcionalidad/04-registro-e-inicio-de-sesion` | ⏳ | [04-registro-e-inicio-de-sesion](docs/features/04-registro-e-inicio-de-sesion.md) |
+| 05 | `experimento/05-tiempo-real` | ⏳ | [05-tiempo-real](docs/features/05-tiempo-real.md) |
 
 ### R1 — MVP
-| # | Rama | Historias | Estado |
-|---|---|---|---|
-| 06 | `funcionalidad/06-crear-y-ver-viajes` | US001, US005, US010 | ⏳ |
-| 07 | `funcionalidad/07-invitar-al-grupo` | US003, US004, US006 | ⏳ |
-| 08 | `funcionalidad/08-proponer-ideas` | US013, US020, US025–US030, US035, US039, US063, US064, US071, US072 | ⏳ |
-| 09 | `funcionalidad/09-comentar-propuestas` | US037, US151 | ⏳ |
-| 10 | `funcionalidad/10-votar-propuestas` | US015, US041, US044, US047, US053, US054 | ⏳ |
-| 11 | `funcionalidad/11-confirmar-decisiones` | US016, US021, US056, US057, US061, US068 | ⏳ |
-| 12 | `funcionalidad/12-presupuesto-del-viaje` | US022, US141, US142, US147 | ⏳ |
-| 13 | `funcionalidad/13-armar-itinerario` | US075, US077, US078, US079, US090 | ⏳ |
-| 14 | `funcionalidad/14-mapa-del-viaje` | US029, US043, US066, US091–US093, US097, US099, US101, US109 | ⏳ |
-| 15 | `funcionalidad/15-ubicacion-en-tiempo-real` | US183, US184 | ⏳ |
-| 16 | `funcionalidad/16-registrar-y-dividir-gastos` | US111–US115, US118, US120 | ⏳ |
-| 17 | `funcionalidad/17-balances-y-deudas` | US131–US134, US176 | ⏳ |
-| 18 | `funcionalidad/18-agenda-de-hoy` | US167, US168 | ⏳ |
-| UX | `diseno/estilo-visual-vN` | Look & feel desde `docs/ux/` | ⏳ |
-| 19 | `funcionalidad/19-instalar-en-celular` | Instalable en celular | ⏳ |
-| 20 | `base/20-publicar-la-app` | Deploy + `v1.0.0` | ⏳ |
+| # | Rama | Historias | Estado | Spec |
+|---|---|---|---|---|
+| 06 | `funcionalidad/06-crear-y-ver-viajes` | US001, US005, US010 | ⏳ | [06-crear-y-ver-viajes](docs/features/06-crear-y-ver-viajes.md) |
+| 07 | `funcionalidad/07-invitar-al-grupo` | US003, US004, US006 | ⏳ | [07-invitar-al-grupo](docs/features/07-invitar-al-grupo.md) |
+| 08 | `funcionalidad/08-proponer-ideas` | US025, US026, US027, US028, US030, US035, US039, US013, US020, US063, US064, US071, US072 | ⏳ | [08-proponer-ideas](docs/features/08-proponer-ideas.md) |
+| 09 | `funcionalidad/09-comentar-propuestas` | US037, US151 | ⏳ | [09-comentar-propuestas](docs/features/09-comentar-propuestas.md) |
+| 10 | `funcionalidad/10-votar-propuestas` | US041, US044, US047, US015, US053, US054 | ⏳ | [10-votar-propuestas](docs/features/10-votar-propuestas.md) |
+| 11 | `funcionalidad/11-confirmar-decisiones` | US056, US016, US021, US068, US057, US061 | ⏳ | [11-confirmar-decisiones](docs/features/11-confirmar-decisiones.md) |
+| 12 | `funcionalidad/12-presupuesto-del-viaje` | US141, US022, US142, US147 | ⏳ | [12-presupuesto-del-viaje](docs/features/12-presupuesto-del-viaje.md) |
+| 13 | `funcionalidad/13-armar-itinerario` | US075, US077, US078, US079, US090 | ⏳ | [13-armar-itinerario](docs/features/13-armar-itinerario.md) |
+| 14 | `funcionalidad/14-mapa-del-viaje` | US029, US091, US092, US093, US097, US043, US066, US101, US099, US109 | ⏳ | [14-mapa-del-viaje](docs/features/14-mapa-del-viaje.md) |
+| 15 | `funcionalidad/15-ubicacion-en-tiempo-real` | US183, US184 | ⏳ | [15-ubicacion-en-tiempo-real](docs/features/15-ubicacion-en-tiempo-real.md) |
+| 16 | `funcionalidad/16-registrar-y-dividir-gastos` | US111, US112, US113, US114, US115, US118, US120 | ⏳ | [16-registrar-y-dividir-gastos](docs/features/16-registrar-y-dividir-gastos.md) |
+| 17 | `funcionalidad/17-balances-y-deudas` | US131, US132, US133, US134, US176 | ⏳ | [17-balances-y-deudas](docs/features/17-balances-y-deudas.md) |
+| 18 | `funcionalidad/18-agenda-de-hoy` | US167, US168 | ⏳ | [18-agenda-de-hoy](docs/features/18-agenda-de-hoy.md) |
+| 19 | `funcionalidad/19-instalar-en-celular` | — | ⏳ | [19-instalar-en-celular](docs/features/19-instalar-en-celular.md) |
+| 20 | `base/20-publicar-la-app` | — | ⏳ | [20-publicar-la-app](docs/features/20-publicar-la-app.md) |
+| UX | `diseno/estilo-visual-v1` | Look & feel desde `docs/ux/` | ⏳ | [docs/ux](docs/ux/README.md) |
+
+Mapa de dependencias y cómo tomar una feature: [docs/features/README.md](docs/features/README.md).
 
 R2 (ramas 21–35) y R3 (ramas 36–44): ver [plan de desarrollo](docs/plan/plan-desarrollo.md#6-hoja-de-ruta-de-ramas).
