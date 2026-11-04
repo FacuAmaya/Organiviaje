@@ -1,0 +1,53 @@
+name: Historia de usuario
+description: Una historia del User Story Mapping (US###)
+title: "US###: "
+labels: ["tipo:historia"]
+body:
+  - type: input
+    id: id
+    attributes:
+      label: ID
+      placeholder: US114
+    validations:
+      required: true
+  - type: textarea
+    id: historia
+    attributes:
+      label: Historia
+      description: "Como <actor> quiero <acción> para <beneficio>"
+      placeholder: Como integrante quiero dividir un gasto en partes iguales para no hacer cuentas a mano
+    validations:
+      required: true
+  - type: textarea
+    id: criterios
+    attributes:
+      label: Criterios de aceptación
+      description: "Dado… cuando… entonces…"
+      value: |
+        - [ ] Dado … cuando … entonces …
+    validations:
+      required: true
+  - type: dropdown
+    id: release
+    attributes:
+      label: Release
+      options: [R1, R2, R3]
+    validations:
+      required: true
+  - type: dropdown
+    id: modulo
+    attributes:
+      label: Módulo
+      options: [nucleo, decisiones, planificacion, finanzas, realtime, ux]
+    validations:
+      required: true
+  - type: input
+    id: prioridad
+    attributes:
+      label: Beneficio / Esfuerzo
+      placeholder: "B 8 · E 1 · 8.00"
+  - type: input
+    id: feature
+    attributes:
+      label: Feature / rama
+      placeholder: funcionalidad/16-registrar-y-dividir-gastos

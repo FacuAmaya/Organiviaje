@@ -1,0 +1,8 @@
+# Quién revisa qué. Sumar a los integrantes del equipo cuando se agreguen como colaboradores.
+# Formato: <ruta> @usuario1 @usuario2
+
+*               @FacuAmaya
+/backend/       @FacuAmaya
+/frontend/      @FacuAmaya
+/docs/          @FacuAmaya
+/.github/       @FacuAmaya
